@@ -1,0 +1,241 @@
+/* RESET */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* BODY */
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #0f172a, #1e3a8a);
+  color: white;
+  line-height: 1.6;
+}
+
+/* CONTAINER */
+.container {
+  width: 100%;
+  padding: 30px 50px;
+}
+
+/* TITLE */
+h1 {
+  text-align: center;
+  font-size: 42px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  letter-spacing: 0.5px;
+}
+
+/* CONTENT CARDS */
+.intro,
+.instructions,
+.pdfs,
+form {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  border-radius: 20px;
+  padding: 25px;
+  margin: 20px 0;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  animation: fadeIn 0.8s ease;
+}
+
+/* TEXT IMPROVEMENTS */
+.intro {
+  font-size: 18px;
+}
+
+.instructions {
+  font-size: 16px;
+}
+
+.instructions ul {
+  margin-top: 10px;
+  padding-left: 20px;
+}
+
+.instructions li {
+  margin-bottom: 8px;
+}
+
+/* PDF LINKS */
+.pdfs a {
+  color: #93c5fd;
+  display: block;
+  margin: 6px 0;
+  font-size: 16px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.pdfs a:hover {
+  color: #bfdbfe;
+  transform: translateX(6px);
+}
+
+/* SECTIONS GRID */
+.sections {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+  margin-top: 10px;
+}
+
+/* SECTION CARDS */
+.card {
+  padding: 20px;
+  border-radius: 22px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+  animation: fadeInUp 0.6s ease;
+}
+
+.card b {
+  font-size: 18px;
+}
+
+.card:hover {
+  transform: translateY(-8px) scale(1.04);
+}
+
+/* CARD COLORS */
+.card:nth-child(1) { background: linear-gradient(135deg, #f59e0b, #f97316); }
+.card:nth-child(2) { background: linear-gradient(135deg, #10b981, #059669); }
+.card:nth-child(3) { background: linear-gradient(135deg, #6366f1, #4338ca); }
+.card:nth-child(4) { background: linear-gradient(135deg, #ec4899, #be185d); }
+.card:nth-child(5) { background: linear-gradient(135deg, #22c55e, #15803d); }
+
+/* ACTIVE CARD */
+.card.active {
+  outline: 3px solid white;
+  transform: scale(1.06);
+}
+
+/* DESCRIPTION */
+.desc {
+  font-size: 14px;
+  margin-top: 8px;
+  opacity: 0.95;
+}
+
+/* FORM */
+form {
+  display: none;
+  transition: 0.3s;
+}
+
+/* INPUTS */
+input,
+textarea {
+  width: 100%;
+  margin: 12px 0;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  font-size: 15px;
+  outline: none;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* INPUT FOCUS */
+input:focus,
+textarea:focus {
+  box-shadow: 0 0 10px rgba(59,130,246,0.6);
+}
+
+/* TEXTAREA */
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* BUTTON */
+button {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  border: none;
+  border-radius: 14px;
+  font-size: 18px;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+button:hover {
+  transform: scale(1.04);
+  box-shadow: 0 6px 25px rgba(59,130,246,0.5);
+}
+
+/* DISABLED BUTTON */
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* LOADER */
+#loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.95);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  font-size: 18px;
+}
+
+/* SPINNER */
+.spinner {
+  width: 55px;
+  height: 55px;
+  border: 6px solid #334155;
+  border-top: 6px solid #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 15px;
+}
+
+/* ANIMATIONS */
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .container {
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 30px;
+  }
+
+  .intro, .instructions, .pdfs, form {
+    padding: 18px;
+  }
+}

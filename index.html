@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Juvenilia 2k26 Magazine Submissions</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Juvenilia 2k26 Magazine Submissions<br>SITS</h1>
+
+<div class="intro">
+Welcome to <b>Juvenilia 2k26</b> — not just a magazine, but a collection of voices, creativity, and ideas from SITS.
+
+Whether you're someone who sketches emotions, writes thoughts, crafts poetry, or simply wants to make someone smile — this is your platform.
+
+Create boldly. Express freely. Leave your mark.
+</div>
+
+<div class="pdfs intro">
+<b>Previous Editions:</b>
+<a href="https://drive.google.com/file/d/14R_AEdtmYRDuHdOC3pRmDowZz-IdYdAl/view?usp=sharing" target="_blank">Magazine 2025</a>
+<a href="https://drive.google.com/file/d/1PQkd5GYpRfQG2mvqp97O2yCEpFAW6qz9/view?usp=sharing" target="_blank">Magazine 2024</a>
+</div>
+
+<div class="instructions">
+<b>Submission Guidelines:</b>
+<ul>
+<li>All entries must be <b>original</b>. No plagiarism. No AI-generated content.</li>
+<li>Languages accepted are <b>English, Hindi & Marathi Only</b>. No other languages allowed</li>
+<li>Keep it <b>appropriate, respectful, and meaningful</b>.</li>
+<li>You may submit to multiple sections, but only <b>one entry per section</b>.</li>
+<li>You will receive a confirmation email after submission.</li>
+<li>If selected, our team will contact you.</li>
+<li>Any misuse or inappropriate submission may lead to strict action.</li>
+</ul>
+
+<b>Need help? Contact:</b>
+<ul>
+<li>Arts & Photography: 87999 58738</li>
+<li>Literature: 80801 83078</li>
+<li>Fun Section: 87888 18050</li>
+<li>Poetry: 72769 61149</li>
+<li>Shoutout: 90755 29919</li>
+</ul>
+</div>
+
+<div class="sections">
+
+<div class="card" onclick="selectSection('ARTS', this)">
+<b>Arts & Photography</b>
+<div class="desc">
+Turn imagination into visuals — paintings, sketches, digital art, photography, or anything that captures a moment or emotion.
+</div>
+</div>
+
+<div class="card" onclick="selectSection('FUN', this)">
+<b>Fun Section</b>
+<div class="desc">
+Got humor? Bring it on. Memes, comics, puzzles, jokes — make us laugh, think, or both.
+</div>
+</div>
+
+<div class="card" onclick="selectSection('LIT', this)">
+<b>Literature</b>
+<div class="desc">
+Words that matter — articles, essays, or stories that make people pause and think.
+</div>
+</div>
+
+<div class="card" onclick="selectSection('POETRY', this)">
+<b>Poetry</b>
+<div class="desc">
+Rhymes or free verse — express emotions in English, Hindi, or Marathi.
+</div>
+</div>
+
+<div class="card" onclick="selectSection('SHOUT', this)">
+<b>Shoutout</b>
+<div class="desc">
+Dedicate something meaningful to your friends, mentors, or even the college itself.
+</div>
+</div>
+
+</div>
+
+<form id="form">
+
+<input type="text" id="name" placeholder="Full Name" required>
+<input type="email" id="email" placeholder="Email" required>
+<input type="text" id="year" placeholder="Year">
+<input type="text" id="department" placeholder="Department">
+<input type="text" id="contact" placeholder="Contact Number">
+
+<input type="hidden" id="section">
+
+<input type="text" id="title" placeholder="Title of Submission">
+<textarea id="description" placeholder="Short Description"></textarea>
+
+<label>Upload PDF (Max 10MB)</label>
+<input type="file" id="pdf" accept="application/pdf" required>
+
+<label>Upload Photo (JPG only, Max 5MB)</label>
+<input type="file" id="image" accept="image/jpeg" required>
+
+<button type="submit">Submit</button>
+
+</form>
+
+</div>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="spinner"></div>
+  <p>Submitting your entry...</p>
+</div>
+
+<script>
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzMqiPb5C76aWrBxnNfSvi2prRqvPwATBcKn6nqQ5U0oRPUzK059pKmPEsYif1Oj9tS/exec";
+
+let isSubmitting = false;
+
+function selectSection(sec, el) {
+  document.getElementById("section").value = sec;
+
+  document.querySelectorAll(".card").forEach(c => c.classList.remove("active"));
+  el.classList.add("active");
+
+  document.getElementById("form").style.display = "block";
+}
+
+function toBase64(file) {
+  return new Promise((res, rej) => {
+    const reader = new FileReader();
+    reader.onload = () => res(reader.result.split(',')[1]);
+    reader.onerror = rej;
+    reader.readAsDataURL(file);
+  });
+}
+
+document.getElementById("form").addEventListener("submit", async function(e) {
+  e.preventDefault();
+
+  if (isSubmitting) return;
+
+  const submitBtn = document.querySelector("button");
+  const loader = document.getElementById("loader");
+
+  const pdf = document.getElementById("pdf").files[0];
+  const img = document.getElementById("image").files[0];
+
+  if (!document.getElementById("section").value) {
+    alert("Please select a section");
+    return;
+  }
+
+  if (!pdf || !img) {
+    alert("Upload both files");
+    return;
+  }
+
+  if (pdf.size > 10 * 1024 * 1024) {
+    alert("PDF must be under 10MB");
+    return;
+  }
+
+  if (img.size > 5 * 1024 * 1024) {
+    alert("Image must be under 5MB");
+    return;
+  }
+
+  isSubmitting = true;
+  submitBtn.disabled = true;
+  submitBtn.innerText = "Submitting...Do NOT Leave or Refresh the Page";
+  loader.style.display = "flex";
+
+  try {
+    const data = {
+      name: document.getElementById("name").value,
+      email: document.getElementById("email").value,
+      year: document.getElementById("year").value,
+      department: document.getElementById("department").value,
+      contact: document.getElementById("contact").value,
+      section: document.getElementById("section").value,
+      title: document.getElementById("title").value,
+      description: document.getElementById("description").value,
+      pdfBase64: await toBase64(pdf),
+      imageBase64: await toBase64(img)
+    };
+
+    const res = await fetch(WEB_APP_URL, {
+      method: "POST",
+      body: JSON.stringify(data)
+    });
+
+    const result = await res.json();
+
+    if (result.success) {
+      alert("Submission successful!");
+      document.getElementById("form").reset();
+    } else {
+      alert("Error: " + result.error);
+    }
+
+  } catch (err) {
+    alert("Submission failed. Try again.");
+  }
+
+  isSubmitting = false;
+  submitBtn.disabled = false;
+  submitBtn.innerText = "Submit";
+  loader.style.display = "none";
+});
+</script>
+
+</body>
+</html>
