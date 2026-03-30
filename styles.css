@@ -239,3 +239,11 @@ button:disabled {
     padding: 18px;
   }
 }
+.section-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 600;
+  margin: 25px 0 10px;
+  color: #93c5fd;
+  letter-spacing: 0.5px;
+}
