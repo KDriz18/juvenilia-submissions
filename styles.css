@@ -241,9 +241,10 @@ button:disabled {
 }
 .section-title {
   text-align: center;
-  font-size: 28px;
-  font-weight: 600;
-  margin: 25px 0 10px;
-  color: #93c5fd;
-  letter-spacing: 0.5px;
+  font-size: 42px;
+  font-weight: 700;
+  margin: 35px 0 15px;
+  color: #bfdbfe;
+  letter-spacing: 1px;
+  text-shadow: 0 0 12px rgba(147, 197, 253, 0.6);
 }
