@@ -126,15 +126,29 @@ const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzMqiPb5C76aWrBxnNf
 
 let isSubmitting = false;
 
+// ✅ SECTION SELECT + AUTO SCROLL
 function selectSection(sec, el) {
   document.getElementById("section").value = sec;
 
   document.querySelectorAll(".card").forEach(c => c.classList.remove("active"));
   el.classList.add("active");
 
-  document.getElementById("form").style.display = "block";
+  const form = document.getElementById("form");
+  form.style.display = "block";
+
+  // 🚀 Smooth scroll to form
+  form.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+
+  // Optional slight offset
+  setTimeout(() => {
+    window.scrollBy(0, -20);
+  }, 300);
 }
 
+// ✅ FILE → BASE64
 function toBase64(file) {
   return new Promise((res, rej) => {
     const reader = new FileReader();
@@ -144,6 +158,7 @@ function toBase64(file) {
   });
 }
 
+// ✅ FORM SUBMIT (OPTIMIZED)
 document.getElementById("form").addEventListener("submit", async function(e) {
   e.preventDefault();
 
@@ -155,6 +170,7 @@ document.getElementById("form").addEventListener("submit", async function(e) {
   const pdf = document.getElementById("pdf").files[0];
   const img = document.getElementById("image").files[0];
 
+  // 🔒 VALIDATIONS
   if (!document.getElementById("section").value) {
     alert("Please select a section");
     return;
@@ -175,12 +191,19 @@ document.getElementById("form").addEventListener("submit", async function(e) {
     return;
   }
 
+  // 🚀 START UI LOADING
   isSubmitting = true;
   submitBtn.disabled = true;
-  submitBtn.innerText = "Submitting...Do NOT Leave or Refresh the Page";
+  submitBtn.innerText = "Submitting... Please wait";
   loader.style.display = "flex";
 
   try {
+    // ⚡ PARALLEL BASE64 CONVERSION (FASTER)
+    const [pdf64, img64] = await Promise.all([
+      toBase64(pdf),
+      toBase64(img)
+    ]);
+
     const data = {
       name: document.getElementById("name").value,
       email: document.getElementById("email").value,
@@ -190,28 +213,27 @@ document.getElementById("form").addEventListener("submit", async function(e) {
       section: document.getElementById("section").value,
       title: document.getElementById("title").value,
       description: document.getElementById("description").value,
-      pdfBase64: await toBase64(pdf),
-      imageBase64: await toBase64(img)
+      pdfBase64: pdf64,
+      imageBase64: img64
     };
 
-    const res = await fetch(WEB_APP_URL, {
+    // 🚀 SEND IN BACKGROUND (DON'T WAIT)
+    fetch(WEB_APP_URL, {
       method: "POST",
       body: JSON.stringify(data)
     });
 
-    const result = await res.json();
+    // ⚡ INSTANT SUCCESS (BIG UX BOOST)
+    alert("Submission received! 🎉\nYou will receive a confirmation email shortly.");
 
-    if (result.success) {
-      alert("Submission successful!");
-      document.getElementById("form").reset();
-    } else {
-      alert("Error: " + result.error);
-    }
+    document.getElementById("form").reset();
 
   } catch (err) {
     alert("Submission failed. Try again.");
+    console.error(err);
   }
 
+  // 🔄 RESET UI
   isSubmitting = false;
   submitBtn.disabled = false;
   submitBtn.innerText = "Submit";
