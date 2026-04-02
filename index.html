@@ -136,11 +136,13 @@ function selectSection(sec, el) {
   const form = document.getElementById("form");
   form.style.display = "block";
 
-  // 🚀 Smooth scroll to form
-  form.scrollIntoView({
-    behavior: "smooth",
-    block: "start"
-  });
+  setTimeout(() => {
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: "smooth"
+    });
+  }, 200);
+}
 
   // Optional slight offset
   setTimeout(() => {
