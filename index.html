@@ -94,7 +94,7 @@ Dedicate something meaningful to your friends, mentors, or even the college itse
 
 <input type="text" id="name" placeholder="Full Name" required>
 <input type="email" id="email" placeholder="Email" required>
-<input type="text" id="year" placeholder="Year (FE, SE, TE, BE, Faculty)">
+<input type="text" id="year" placeholder="Year">
 <input type="text" id="department" placeholder="Department">
 <input type="text" id="contact" placeholder="Contact Number">
 
@@ -126,7 +126,7 @@ const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzMqiPb5C76aWrBxnNf
 
 let isSubmitting = false;
 
-// ✅ SECTION SELECT + AUTO SCROLL
+// SECTION SELECT + AUTO SCROLL
 function selectSection(sec, el) {
   document.getElementById("section").value = sec;
 
@@ -150,7 +150,7 @@ function selectSection(sec, el) {
   }, 300);
 }
 
-// ✅ FILE → BASE64
+// FILE → BASE64
 function toBase64(file) {
   return new Promise((res, rej) => {
     const reader = new FileReader();
@@ -160,7 +160,7 @@ function toBase64(file) {
   });
 }
 
-// ✅ FORM SUBMIT (OPTIMIZED)
+// FORM SUBMIT (OPTIMIZED)
 document.getElementById("form").addEventListener("submit", async function(e) {
   e.preventDefault();
 
@@ -172,7 +172,7 @@ document.getElementById("form").addEventListener("submit", async function(e) {
   const pdf = document.getElementById("pdf").files[0];
   const img = document.getElementById("image").files[0];
 
-  // 🔒 VALIDATIONS
+  // VALIDATIONS
   if (!document.getElementById("section").value) {
     alert("Please select a section");
     return;
@@ -193,14 +193,14 @@ document.getElementById("form").addEventListener("submit", async function(e) {
     return;
   }
 
-  // 🚀 START UI LOADING
+  //START UI LOADING
   isSubmitting = true;
   submitBtn.disabled = true;
   submitBtn.innerText = "Submitting... Please wait";
   loader.style.display = "flex";
 
   try {
-    // ⚡ PARALLEL BASE64 CONVERSION (FASTER)
+    //PARALLEL BASE64 CONVERSION
     const [pdf64, img64] = await Promise.all([
       toBase64(pdf),
       toBase64(img)
@@ -219,13 +219,12 @@ document.getElementById("form").addEventListener("submit", async function(e) {
       imageBase64: img64
     };
 
-    // 🚀 SEND IN BACKGROUND (DON'T WAIT)
     fetch(WEB_APP_URL, {
       method: "POST",
       body: JSON.stringify(data)
     });
 
-    // ⚡ INSTANT SUCCESS (BIG UX BOOST)
+    
     alert("Submission received! 🎉\nYou will receive a confirmation email shortly.");
 
     document.getElementById("form").reset();
@@ -235,7 +234,7 @@ document.getElementById("form").addEventListener("submit", async function(e) {
     console.error(err);
   }
 
-  // 🔄 RESET UI
+  // RESET UI
   isSubmitting = false;
   submitBtn.disabled = false;
   submitBtn.innerText = "Submit";
