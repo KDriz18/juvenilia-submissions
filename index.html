@@ -138,12 +138,11 @@ function selectSection(sec, el) {
 
   setTimeout(() => {
     window.scrollTo({
-      top: document.documentElement.scrollHeight,
+      top: document.body.scrollHeight + 500,
       behavior: "smooth"
     });
-  }, 200);
+  }, 300);
 }
-
 // ✅ FILE → BASE64
 function toBase64(file) {
   return new Promise((res, rej) => {
